@@ -1,7 +1,12 @@
-import '../styles/globals.css'
+import { StateProvider } from '../context';
+import 'tailwindcss/tailwind.css'
 
 function MyApp({ Component, pageProps }) {
-  return <Component {...pageProps} />
+  return (
+    <StateProvider>
+      <Component {...pageProps} />
+    </StateProvider>
+  )
 }
 
 export default MyApp
