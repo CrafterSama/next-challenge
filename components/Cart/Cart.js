@@ -23,6 +23,7 @@ const Cart = () => {
   const [state, dispatch] = useStateValue()
  
   const onChange = (event, product) => {
+    product['quantity'] = Number(event.target.value)
     if (Number(event.target.value) === 0) {
       ReactSwal.fire({
         title: DELETE_TITLE_TEXT,
@@ -39,13 +40,15 @@ const Cart = () => {
             '',
             SWEET_ALERT_SUCCESS_ICON
           )
-          product['quantity'] = Number(event.target.value)
           updateCart(product, dispatch)
         } else {
           event.target.value = 1
         }
       })
+    } else {
+      updateCart(product, dispatch)
     }
+
   }
 
   const onRemoveItem = (product) => {
