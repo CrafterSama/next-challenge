@@ -1,23 +1,107 @@
 import React from 'react'
 import { useStateValue } from '../../context'
 import { resetStore, updateCart } from '../../context/actions'
+import { ReactSwal } from '../../utils'
+import {
+  DELETE_TITLE_TEXT,
+  EMPTY_CART_TITLE_TEXT,
+  DELETE_WARNING_TEXT,
+  SWEET_ALERT_WARNING_ICON,
+  SWEET_ALERT_SUCCESS_ICON,
+  CONFIRM_BUTTON_TEXT,
+  CONFIRM_EMPTY_BUTTON_TEXT,
+  CONFIRM_DELETE_TEXT,
+  CONFIRM_EMPTY_CART_TEXT,
+  CONFIRM_BUTTON_COLOR,
+  CANCEL_BUTTON_COLOR,
+  SHOP_CONFIRM,
+  THANKS_TEXT
+} from '../../constants'
 
 const Cart = () => {
 
   const [state, dispatch] = useStateValue()
-
+ 
   const onChange = (event, product) => {
-    product['quantity'] = Number(event.target.value)
-    updateCart(product, dispatch)
+    if (Number(event.target.value) === 0) {
+      ReactSwal.fire({
+        title: DELETE_TITLE_TEXT,
+        text: DELETE_WARNING_TEXT,
+        icon: SWEET_ALERT_WARNING_ICON,
+        showCancelButton: true,
+        confirmButtonColor: CONFIRM_BUTTON_COLOR,
+        cancelButtonColor: CANCEL_BUTTON_COLOR,
+        confirmButtonText: CONFIRM_BUTTON_TEXT
+      }).then((result) => {
+        if (result.isConfirmed) {
+          ReactSwal.fire(
+            CONFIRM_DELETE_TEXT,
+            '',
+            SWEET_ALERT_SUCCESS_ICON
+          )
+          product['quantity'] = Number(event.target.value)
+          updateCart(product, dispatch)
+        } else {
+          event.target.value = 1
+        }
+      })
+    }
   }
 
   const onRemoveItem = (product) => {
     product['quantity'] = 0;
-    updateCart(product, dispatch)
+    ReactSwal.fire({
+      title: DELETE_TITLE_TEXT,
+      text: DELETE_WARNING_TEXT,
+      icon: SWEET_ALERT_WARNING_ICON,
+      showCancelButton: true,
+      confirmButtonColor: CONFIRM_BUTTON_COLOR,
+      cancelButtonColor: CANCEL_BUTTON_COLOR,
+      confirmButtonText: CONFIRM_BUTTON_TEXT
+    }).then((result) => {
+      if (result.isConfirmed) {
+        ReactSwal.fire(
+          CONFIRM_DELETE_TEXT,
+          '',
+          SWEET_ALERT_SUCCESS_ICON
+        )
+        updateCart(product, dispatch)
+      }
+    })
   }
 
   const onEmptyCart = () => {
-    resetStore(dispatch)
+    ReactSwal.fire({
+      title: EMPTY_CART_TITLE_TEXT,
+      text: DELETE_WARNING_TEXT,
+      icon: SWEET_ALERT_WARNING_ICON,
+      showCancelButton: true,
+      confirmButtonColor: CONFIRM_BUTTON_COLOR,
+      cancelButtonColor: CANCEL_BUTTON_COLOR,
+      confirmButtonText: CONFIRM_EMPTY_BUTTON_TEXT
+    }).then((result) => {
+      if (result.isConfirmed) {
+        ReactSwal.fire(
+          CONFIRM_EMPTY_CART_TEXT,
+          '',
+          SWEET_ALERT_SUCCESS_ICON
+        )
+        resetStore(dispatch)
+      }
+    })
+  }
+
+  const onEndShoppingProccess = () => {
+    ReactSwal.fire({
+      title: SHOP_CONFIRM,
+      text: THANKS_TEXT,
+      icon: SWEET_ALERT_SUCCESS_ICON,
+      showConfirmButton: true
+    }).then((result) => {
+      if (result.isConfirmed) {
+        resetStore(dispatch)
+      }
+    })
   }
 
   return (
@@ -46,9 +130,14 @@ const Cart = () => {
                     </a>
                   </td>
                   <td>
-                    <p className="mb-2 md:ml-4 w-96 truncate">{item.name}</p>
+                    <p className="mb-2 md:ml-4 md:w-96 sm:w-10 sm:truncate" title={item.name}>{item.name}</p>
                     <button onClick={() => onRemoveItem(item)} type="button" className="text-gray-700 md:ml-4">
-                      <small>(Remove item)</small>
+                      <small className="text-red-800 hover:text-red-600 flex">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
+                        </svg>
+                        Remove item
+                      </small>
                     </button>
                   </td>
                   <td className="justify-center md:justify-end md:flex md:mt-8">
@@ -79,20 +168,27 @@ const Cart = () => {
           )}
           <hr className="pb-6 mt-6" />
           <div className="my-4 mt-6 -mx-2 lg:flex">
-            <div className="lg:px-2 lg:w-1/2"></div>
             <div className="lg:px-2 lg:w-1/2">
-              <div className="p-4">
-                <div className="flex justify-between pt-4 border-b">
-                  <div className="lg:px-4 lg:py-2 m-2 text-lg lg:text-xl font-bold text-center text-gray-800">
-                    Total
-                  </div>
-                  <div className="lg:px-4 lg:py-2 m-2 lg:text-lg font-bold text-center text-gray-900">
-                    ${state.totalCart.toFixed(2)}
-                  </div>
+            </div>
+            <div className="lg:px-2 lg:w-1/2">
+              <div className="flex justify-between pt-4 border-b">
+                <div className="lg:px-4 lg:py-2 m-2 text-lg lg:text-xl font-bold text-center text-gray-800">
+                  Total
                 </div>
-                <button onClick={onEmptyCart} className="flex justify-center w-full px-10 py-3 mt-6 font-medium text-white uppercase bg-gray-800 rounded-full shadow item-center hover:bg-gray-700 focus:shadow-outline focus:outline-none">
-                  <svg aria-hidden="true" data-prefix="far" data-icon="credit-card" className="w-8" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512"><path fill="currentColor" d="M527.9 32H48.1C21.5 32 0 53.5 0 80v352c0 26.5 21.5 48 48.1 48h479.8c26.6 0 48.1-21.5 48.1-48V80c0-26.5-21.5-48-48.1-48zM54.1 80h467.8c3.3 0 6 2.7 6 6v42H48.1V86c0-3.3 2.7-6 6-6zm467.8 352H54.1c-3.3 0-6-2.7-6-6V256h479.8v170c0 3.3-2.7 6-6 6zM192 332v40c0 6.6-5.4 12-12 12h-72c-6.6 0-12-5.4-12-12v-40c0-6.6 5.4-12 12-12h72c6.6 0 12 5.4 12 12zm192 0v40c0 6.6-5.4 12-12 12H236c-6.6 0-12-5.4-12-12v-40c0-6.6 5.4-12 12-12h136c6.6 0 12 5.4 12 12z"/></svg>
+                <div className="lg:px-4 lg:py-2 m-2 lg:text-lg font-bold text-center text-gray-900">
+                  ${state.totalCart.toFixed(2)}
+                </div>
+              </div>
+              <div className="md:flex xs:flex-col md:space-x-4 md:justify-between pt-4 grid">
+                <button onClick={onEmptyCart} className="flex justify-center w-full px-10 py-3 mt-6 font-medium rounded text-white uppercase bg-gray-400 rounded-full shadow item-center hover:bg-gray-500 focus:shadow-outline focus:outline-none">
+                  <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
+                  </svg>
                   <span className="ml-2 mt-5px">Vaciar Carro</span>
+                </button>
+                <button onClick={onEndShoppingProccess} className="flex justify-center w-full px-10 py-3 mt-6 rounded font-medium text-white uppercase bg-indigo-600 rounded-full shadow item-center hover:bg-indigo-400 focus:shadow-outline focus:outline-none">
+                  <svg aria-hidden="true" data-prefix="far" data-icon="credit-card" className="w-8" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512"><path fill="currentColor" d="M527.9 32H48.1C21.5 32 0 53.5 0 80v352c0 26.5 21.5 48 48.1 48h479.8c26.6 0 48.1-21.5 48.1-48V80c0-26.5-21.5-48-48.1-48zM54.1 80h467.8c3.3 0 6 2.7 6 6v42H48.1V86c0-3.3 2.7-6 6-6zm467.8 352H54.1c-3.3 0-6-2.7-6-6V256h479.8v170c0 3.3-2.7 6-6 6zM192 332v40c0 6.6-5.4 12-12 12h-72c-6.6 0-12-5.4-12-12v-40c0-6.6 5.4-12 12-12h72c6.6 0 12 5.4 12 12zm192 0v40c0 6.6-5.4 12-12 12H236c-6.6 0-12-5.4-12-12v-40c0-6.6 5.4-12 12-12h136c6.6 0 12 5.4 12 12z"/></svg>
+                  <span className="ml-2 mt-5px">Finalizar Compra</span>
                 </button>
               </div>
             </div>

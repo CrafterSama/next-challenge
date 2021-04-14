@@ -8,9 +8,11 @@ import {
   API_URL,
   LOCAL_STORAGE_CART_KEY,
   LOCAL_STORAGE_TOTAL_CART_KEY,
+  SWEET_ALERT_SUCCESS_ICON,
+  CART_UPDATED
 } from '../constants'
 import { fetchData } from '../services'
-import { cartTotal, updateCartItem } from '../utils'
+import { cartTotal, updateCartItem, ReactSwal } from '../utils'
 
 export const getProducts = async (dispatch) => {
   
@@ -92,6 +94,17 @@ export const updateCart = (product, dispatch, isAdd = false) => {
   })
 
   getTotalCart(cart, dispatch)
+  
+  ReactSwal.fire({
+    toast: true,
+    icon: SWEET_ALERT_SUCCESS_ICON,
+    title: CART_UPDATED,
+    position: 'top-end',
+    timer: 2000,
+    timerProgressBar: true,
+    showConfirmButton: false,
+    showCloseButton: true,
+  })
 
 }
 

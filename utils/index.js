@@ -1,4 +1,7 @@
-import { GET_PRODUCTS } from "../context/types";
+import Swal from 'sweetalert2'
+import withReactContent from 'sweetalert2-react-content'
+
+export const ReactSwal = withReactContent(Swal)
 
 export const cartTotal = (cart) => {
   let totalCart = 0

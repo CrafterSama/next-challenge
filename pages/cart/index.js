@@ -7,7 +7,7 @@ const CartPage = () => {
     return (
       <>
         <Head>
-          <title>Create Next App</title>
+          <title>Meru Cart Challenge - Cart</title>
           <link rel="icon" href="/favicon.ico" />
           <meta charSet="utf-8" />
 	        <meta httpEquiv="X-UA-Compatible" content="IE=edge" />
