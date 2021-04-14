@@ -179,18 +179,20 @@ const Cart = () => {
                   ${state.totalCart.toFixed(2)}
                 </div>
               </div>
-              <div className="md:flex xs:flex-col md:space-x-4 md:justify-between pt-4 grid">
-                <button onClick={onEmptyCart} className="flex justify-center w-full px-10 py-3 mt-6 font-medium rounded text-white uppercase bg-gray-400 rounded-full shadow item-center hover:bg-gray-500 focus:shadow-outline focus:outline-none">
-                  <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
-                  </svg>
-                  <span className="ml-2 mt-5px">Vaciar Carro</span>
-                </button>
-                <button onClick={onEndShoppingProccess} className="flex justify-center w-full px-10 py-3 mt-6 rounded font-medium text-white uppercase bg-indigo-600 rounded-full shadow item-center hover:bg-indigo-400 focus:shadow-outline focus:outline-none">
-                  <svg aria-hidden="true" data-prefix="far" data-icon="credit-card" className="w-8" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512"><path fill="currentColor" d="M527.9 32H48.1C21.5 32 0 53.5 0 80v352c0 26.5 21.5 48 48.1 48h479.8c26.6 0 48.1-21.5 48.1-48V80c0-26.5-21.5-48-48.1-48zM54.1 80h467.8c3.3 0 6 2.7 6 6v42H48.1V86c0-3.3 2.7-6 6-6zm467.8 352H54.1c-3.3 0-6-2.7-6-6V256h479.8v170c0 3.3-2.7 6-6 6zM192 332v40c0 6.6-5.4 12-12 12h-72c-6.6 0-12-5.4-12-12v-40c0-6.6 5.4-12 12-12h72c6.6 0 12 5.4 12 12zm192 0v40c0 6.6-5.4 12-12 12H236c-6.6 0-12-5.4-12-12v-40c0-6.6 5.4-12 12-12h136c6.6 0 12 5.4 12 12z"/></svg>
-                  <span className="ml-2 mt-5px">Finalizar Compra</span>
-                </button>
-              </div>
+              {state.cart.length > 0 && (
+                <div className="md:flex xs:flex-col md:space-x-4 md:justify-between pt-4 grid">
+                  <button onClick={onEmptyCart} className="flex justify-center w-full px-10 py-3 mt-6 font-medium rounded text-white uppercase bg-gray-400 rounded-full shadow item-center hover:bg-gray-500 focus:shadow-outline focus:outline-none">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
+                    </svg>
+                    <span className="ml-2 mt-5px">Vaciar Carro</span>
+                  </button>
+                  <button onClick={onEndShoppingProccess} className="flex justify-center w-full px-10 py-3 mt-6 rounded font-medium text-white uppercase bg-indigo-600 rounded-full shadow item-center hover:bg-indigo-400 focus:shadow-outline focus:outline-none">
+                    <svg aria-hidden="true" data-prefix="far" data-icon="credit-card" className="w-8" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512"><path fill="currentColor" d="M527.9 32H48.1C21.5 32 0 53.5 0 80v352c0 26.5 21.5 48 48.1 48h479.8c26.6 0 48.1-21.5 48.1-48V80c0-26.5-21.5-48-48.1-48zM54.1 80h467.8c3.3 0 6 2.7 6 6v42H48.1V86c0-3.3 2.7-6 6-6zm467.8 352H54.1c-3.3 0-6-2.7-6-6V256h479.8v170c0 3.3-2.7 6-6 6zM192 332v40c0 6.6-5.4 12-12 12h-72c-6.6 0-12-5.4-12-12v-40c0-6.6 5.4-12 12-12h72c6.6 0 12 5.4 12 12zm192 0v40c0 6.6-5.4 12-12 12H236c-6.6 0-12-5.4-12-12v-40c0-6.6 5.4-12 12-12h136c6.6 0 12 5.4 12 12z"/></svg>
+                    <span className="ml-2 mt-5px">Finalizar Compra</span>
+                  </button>
+                </div>
+              )}
             </div>
           </div>
         </div>
