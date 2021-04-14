@@ -8,8 +8,6 @@ const ProductList = () => {
 
   const [state, dispatch] = useStateValue()
 
-  console.log(state, state.loading)
-
   useEffect(() => {
     if (state.loading) {
       getProducts(dispatch)

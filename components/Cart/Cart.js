@@ -1,4 +1,5 @@
 import React from 'react'
+import Link from 'next/link'
 import { useStateValue } from '../../context'
 import { resetStore, updateCart } from '../../context/actions'
 import { ReactSwal } from '../../utils'
@@ -136,10 +137,10 @@ const Cart = () => {
                     <p className="mb-2 md:ml-4 md:w-96 sm:w-10 sm:truncate" title={item.name}>{item.name}</p>
                     <button onClick={() => onRemoveItem(item)} type="button" className="text-gray-700 md:ml-4">
                       <small className="text-red-800 hover:text-red-600 flex">
-                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
+                        <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
                         </svg>
-                        Remove item
+                        Quitar Producto
                       </small>
                     </button>
                   </td>
@@ -167,7 +168,7 @@ const Cart = () => {
             </tbody>
           </table>
           {state.cart.length == 0 && (
-            <p className="flex justify-items-center">No Hay Items en el Carrito de Compras</p>
+            <p className="w-full text-center my-8">No Hay <Link href={{ pathname: '/' }}><a className="font-bold underline">Productos</a></Link> en el Carrito de Compras</p>
           )}
           <hr className="pb-6 mt-6" />
           <div className="my-4 mt-6 -mx-2 lg:flex">
@@ -185,8 +186,8 @@ const Cart = () => {
               {state.cart.length > 0 && (
                 <div className="md:flex xs:flex-col md:space-x-4 md:justify-between pt-4 grid">
                   <button onClick={onEmptyCart} className="flex justify-center w-full px-10 py-3 mt-6 font-medium rounded text-white uppercase bg-gray-400 rounded-full shadow item-center hover:bg-gray-500 focus:shadow-outline focus:outline-none">
-                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
+                    <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
                     </svg>
                     <span className="ml-2 mt-5px">Vaciar Carro</span>
                   </button>

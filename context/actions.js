@@ -85,7 +85,6 @@ export const updateCart = (product, dispatch, isAdd = false) => {
   } else {
     cart = [product]
   }
-  console.log(cartKeeped, cart)  
   localStorage.setItem(LOCAL_STORAGE_CART_KEY, JSON.stringify(cart))
     
   dispatch({
